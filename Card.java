@@ -3,10 +3,10 @@ import java.util.List;
 public class Card {
     private String name;
     private String type;
-    private List<Object> attributes;
+    private List<String> attributes;
     private boolean hasSpecialEffect;
 
-    public Card(String name, String type, List<Object> attributes, boolean hasSpecialEffect) {
+    public Card(String name, String type, List<String> attributes, boolean hasSpecialEffect) {
         this.name = name;
         this.type = type;
         this.attributes = attributes;
@@ -21,7 +21,7 @@ public class Card {
         return type;
     }
 
-    public List<Object> getAttributes() {
+    public List<String> getAttributes() {
         return attributes;
     }
 

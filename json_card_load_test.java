@@ -3,11 +3,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-public class json_load_test {
+public class json_card_load_test {
     public static void main(String[] args) {
         try {
             Gson gson = new Gson();
-            Card[] cards = gson.fromJson(new FileReader("./Java_project/data.json"), Card[].class);
+            Card[] cards = gson.fromJson(new FileReader("./Java_project/card.json"), Card[].class);
             List<Card> cardList = Arrays.asList(cards);
 
             for (Card card : cardList) {
