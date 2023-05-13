@@ -1,0 +1,26 @@
+[
+    {
+      "name": "柯文哲",
+      "type": "名人卡",
+      "attributes": ["政治人物", "市長", "台北市", "男生"],
+      "hasSpecialEffect": false
+    },
+    {
+        "name": "蔡英文",
+        "type": "名人卡",
+        "attributes": ["政治人物", "總統", "台灣", "女生"],
+        "hasSpecialEffect": false
+    },
+    {
+        "name": "羅志祥",
+        "type": "名人卡",
+        "attributes": ["藝人", "台灣", "男生"],
+        "hasSpecialEffect": false
+    },
+    {
+      "name": "Covid-19",
+      "type": "事件卡",
+      "attributes": [],
+      "hasSpecialEffect": true
+    }
+]
