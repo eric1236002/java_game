@@ -9,13 +9,18 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         // 建立玩家和卡片列表
         Player player = new Player(); // 初始血量為 10
         Boss boss = new Boss(10); // 初始血量為 10
         List<Card> cardList = createCardList();
         Map<String, Integer> attributeCondition = loadAttributeCondition();
+        // 添加初始手牌
+        for (int i = 0; i < 5; i++) {
+            Card card = drawCard(cardList);
+            player.addCardToHand(card);
+        }
         // 遊戲主要進行階段
         while (true) {
             // 玩家攻擊階段
@@ -28,11 +33,24 @@ public class main {
             System.out.println("Selected Attribute: " + selectedAttribute);
             System.out.println("Playable Cards: " + playableCards);
 
-            // TODO: 玩家進行攻擊
-
-
+            // 玩家選3張相同屬性牌
+            if (playableCards.size() >= 3) {
+                List<Card> selectedCards = new ArrayList<>();
+                for (int i = 0; i < 3; i++) {
+                    Card card = drawCard(playableCards);
+                    selectedCards.add(card);
+                }
+                System.out.println("Selected Cards: " + selectedCards);
+                // 從手牌中移除選擇的卡片
+                for (Card card : selectedCards) {
+                    player.removeCardFromHand(card);
+                }
+                boss.decreaseHealth(requiredCount);
+            } else {
+                System.out.println("No playable cards. Pass this turn.");
+            }
             // Boss攻擊階段
-            performBossAction(boss);
+            performBossAction(player,boss);
 
             // 結算階段
             if (player.getHealth() <= 0) {
@@ -43,6 +61,15 @@ public class main {
                 break;
             }
         }
+    }
+    public static Card drawCard(List<Card> cardList) {
+        if (cardList.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        int index = random.nextInt(cardList.size());
+        Card card = cardList.get(index);
+        return card;
     }
 
     private static List<Card> createCardList() {
@@ -90,14 +117,16 @@ public class main {
         return playableCards;
     }
 
-    private static void performBossAction(Boss boss) {
+    private static void performBossAction(Player player,Boss boss) {
         boolean healthorattack = new Random().nextBoolean();
         if (healthorattack) {
             boss.increaseHealth(1);
             System.out.println("Boss回血");
+            System.out.println("Boss血量:" + boss.getHealth());
         } else {
-            boss.decreaseHealth(1);
+            player.decreaseHealth(1);
             System.out.println("Boss攻擊");
+            System.out.println("玩家血量:" + player.getHealth());
         }
     }
 

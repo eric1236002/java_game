@@ -1,5 +1,5 @@
 import java.util.List;
-
+import java.util.Random;
 public class Card {
     private String name;
     private String type;
