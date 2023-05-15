@@ -27,7 +27,7 @@ public class Card_attribute_Panel {
         buf.setForeground(Color.BLACK);
         buf.setBackground(Color.WHITE);
         buf.setOpaque(true);
-        gbc.gridy = 0; // 控制垂直位置
+        gbc.gridy = 0; // controls vertical position
         gbc.insets = new Insets(0, 0, 0, 0);
         attribute_panel.add(buf, gbc);
 
@@ -37,13 +37,10 @@ public class Card_attribute_Panel {
             att.setForeground(Color.BLACK);
             att.setBackground(Color.WHITE);
             att.setOpaque(true);
-            gbc.gridy = i + 1; // 控制垂直位置
+            gbc.gridy = i + 1; // controls vertical position
             gbc.insets = new Insets(0, 0, 0, 0);
             attribute_panel.add(att, gbc);
         }
-        // attribute_panel.add(new JLabel(card.getAttributes().toString()), gbc);
-        // attribute_panel.add(new JLabel(String.valueOf(card.hasSpecialEffect())),
-        // gbc);
         return attribute_panel;
     }
 }

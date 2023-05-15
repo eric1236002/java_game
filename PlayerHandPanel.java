@@ -76,61 +76,23 @@ public class PlayerHandPanel extends JPanel {
 
             cardButton.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
-                    // 滑鼠進入按鈕時顯示 cardPanel
-                    guiPanel.add(attribute, BorderLayout.NORTH); // 添加 attribute 面板
+                    // when mouse entered the button, show the card attribute panel
+                    guiPanel.add(attribute, BorderLayout.NORTH); // add the card attribute panel
                     attribute.setVisible(true);
                 }
 
                 public void mouseExited(MouseEvent e) {
-                    // 滑鼠離開按鈕時隱藏 cardPanel
+                    // when mouse exited the button, hide the card attribute panel
                     attribute.setVisible(false);
                 }
             });
-            gbc.gridx++; // 遞增列索引，使按鈕水平排列
-            //cardPanel.add(attribute, gbc);
+            gbc.gridx++; // make the card buttons in a row
             cardPanel.add(cardButton, gbc);
-            /*
-             * cardButtons.add(cardButton);
-             * cardPanel.add(attribute, gbc);*/
             
              
         }
-
-        // create button
-        /*
-         * JButton cardButton = new JButton();
-         * ImageIcon buttonIcon = new ImageIcon("picture/Curry final.png");
-         * Image image = buttonIcon.getImage().getScaledInstance(150, 250,
-         * Image.SCALE_SMOOTH);
-         * buttonIcon = new ImageIcon(image);
-         * cardButton.setBounds(20, 50, 100, 150);
-         * cardButton.setOpaque(false);
-         * cardButton.setContentAreaFilled(false);
-         * cardButton.setBorderPainted(false);
-         * cardButton.setBorder(null);
-         * cardButton.setIcon(buttonIcon);
-         */
-
-        // Set the bottom margin
-        //gbc.insets = new Insets(10, 50, 50, 30);
-        //gbc.gridwidth = GridBagConstraints.REMAINDER;
-        // cardPanel.add(cardButton, gbc);
-        /* 
-        for (JButton cardButton : cardButtons) {
-            cardPanel.add(cardButton, gbc);
-        }*/
-
-        // 創建新的 GridBagConstraints 對象用於添加 attribute 面板
-        /*
-         * GridBagConstraints attributeGbc = new GridBagConstraints();
-         * attributeGbc.anchor = GridBagConstraints.PAGE_END;
-         * attributeGbc.weighty = 1.0;
-         * attributeGbc.insets = new Insets(10, 0, 50, 30);
-         * attributeGbc.gridwidth = GridBagConstraints.REMAINDER; // 將組件添加到行的末尾
-         */
         // Add the button panel to the GUI panel
         guiPanel.add(cardPanel, BorderLayout.WEST);
-        // cardPanel.add(cardButton, gbc);
 
         return guiPanel;
     }
