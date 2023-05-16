@@ -61,15 +61,45 @@ public class GamePanel extends JPanel implements Runnable {
         changeBackgroundButton.setBorder(null);
         changeBackgroundButton.setIcon(buttonIcon);
 
+        // Create the attack and pass button panel
+        JPanel attack_pass_panel = new JPanel();
+        attack_pass_panel.setLayout(new BoxLayout(attack_pass_panel, BoxLayout.Y_AXIS));
+        attack_pass_panel.setOpaque(false);
+
+        // Create the attack and pass button
+        JButton attack_button = new JButton();
+        ImageIcon attack_buttonIcon = new ImageIcon("picture/Attack_button.png");
+        attack_button.setOpaque(false);
+        attack_button.setContentAreaFilled(false);
+        attack_button.setBorderPainted(false);
+        attack_button.setBorder(null);
+        attack_button.setIcon(attack_buttonIcon);
+        attack_button.setVisible(false);
+        
+        JButton pass_button = new JButton();
+        ImageIcon pass_buttonIcon = new ImageIcon("picture/Pass_button.png");
+        pass_button.setOpaque(false);
+        pass_button.setContentAreaFilled(false);
+        pass_button.setBorderPainted(false);
+        pass_button.setBorder(null);
+        pass_button.setIcon(pass_buttonIcon);
+        pass_button.setVisible(false);
+
+
         changeBackgroundButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 background.setImage("picture/background.png");
                 add(playerHandPanel.HandCard(), BorderLayout.SOUTH);
                 playerHandPanel.setVisible(true);
                 changeBackgroundButton.setVisible(false);
+                attack_button.setVisible(true);
+                pass_button.setVisible(true);
                 repaint();
             }
         });
+
+        
+        
 
         // Add the button to the panel
         GridBagConstraints gbc = new GridBagConstraints();
@@ -78,11 +108,23 @@ public class GamePanel extends JPanel implements Runnable {
         // Set the bottom margin
         gbc.insets = new Insets(10, 0, 50, 30); 
         buttonPanel.add(changeBackgroundButton, gbc);
+        
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.anchor = GridBagConstraints.CENTER;
+        gbc2.weighty = 1.0;
+        // Set the bottom margin
+        gbc2.insets = new Insets(10, 0, 50, 30); 
+        attack_pass_panel.add(Box.createVerticalStrut(250));
+        attack_pass_panel.add(attack_button, gbc2);
+        attack_pass_panel.add(Box.createVerticalStrut(30));
+        attack_pass_panel.add(pass_button, gbc2);
 
         // Add the button panel to the GUI panel
         JPanel guiPanel = new JPanel(new BorderLayout());
         guiPanel.setOpaque(false);
         guiPanel.add(buttonPanel, BorderLayout.CENTER);
+        
+        this.add(attack_pass_panel, BorderLayout.EAST);
 
         return guiPanel;
     }
