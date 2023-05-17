@@ -5,11 +5,11 @@ import java.awt.event.*;
 public class GamePanel extends JPanel implements Runnable {
     private Background background;
     private PlayerHandPanel playerHandPanel;
-
+    private BossPanel bossPanel = new BossPanel();
     public GamePanel() {
         background = new Background();
         background.setImage("picture/startscreen.png");
-
+        
         setLayout(new BorderLayout());
 
         // Create the GUI interface
@@ -18,17 +18,20 @@ public class GamePanel extends JPanel implements Runnable {
         // Create the player hand panel
         playerHandPanel = new PlayerHandPanel();
         playerHandPanel.setVisible(false);
-
+        bossPanel=new BossPanel();
+        bossPanel.setVisible(false);
+        bossPanel.setBounds(0, 0,700, 700); 
+        bossPanel.setOpaque(false);
         // Add the GUI panel and player hand panel to the main panel
         add(guiPanel, BorderLayout.SOUTH);
-
+        add(bossPanel);
         new Thread(this).start();
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
-        
+
     }
 
     public void update() {
@@ -91,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
                 background.setImage("picture/background.png");
                 add(playerHandPanel.HandCard(), BorderLayout.SOUTH);
                 playerHandPanel.setVisible(true);
+                bossPanel.setVisible(true);
                 changeBackgroundButton.setVisible(false);
                 attack_button.setVisible(true);
                 pass_button.setVisible(true);

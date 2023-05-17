@@ -9,6 +9,10 @@ class Boss {
         return health;
     }
 
+    public void setHealth(int num) {
+        health = num;
+    }
+
     public void decreaseHealth(int amount) {
         health -= amount;
     }

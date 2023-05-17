@@ -9,31 +9,31 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
-        // å»ºç????©å®¶?????¡ç?????è¡?
-        Player player = new Player(); // ???å§?è¡??????? 10
-        Boss boss = new Boss(10); // ???å§?è¡??????? 10
+        // å»ºç«‹ç©å®¶å’Œå¡ç‰‡åˆ—è¡¨
+        Player player = new Player(); // åˆå§‹è¡€é‡ç‚º 10
+        Boss boss = new Boss(10); // åˆå§‹è¡€é‡ç‚º 10
         List<Card> cardList = createCardList();
         Map<String, Integer> attributeCondition = loadAttributeCondition();
-        // æ·»å?????å§???????
+        // æ·»åŠ åˆå§‹æ‰‹ç‰Œ
         for (int i = 0; i < 5; i++) {
             Card card = drawCard(cardList);
             player.addCardToHand(card);
         }
-        // ?????²ä¸»è¦???²è?????æ®?
+        // éŠæˆ²ä¸»è¦é€²è¡Œéšæ®µ
         while (true) {
-            // ??©å®¶??»æ?????æ®?
+            // ç©å®¶æ”»æ“Šéšæ®µ
             String selectedAttribute = getRandomAttribute(attributeCondition);
             int requiredCount = attributeCondition.get(selectedAttribute);
-            // ??¨é????²ä¸­ä½¿ç?¨é?¸æ?????å±¬æ?§æ??ä»?
-            System.out.println("è¦?æ±?å±¬æ??:" + selectedAttribute);
-            System.out.println("??»æ?????" + requiredCount);
+            // åœ¨éŠæˆ²ä¸­ä½¿ç”¨é¸æ“‡çš„å±¬æ€§æ¢ä»¶
+            System.out.println("è¦æ±‚å±¬æ€§:" + selectedAttribute);
+            System.out.println("æ”»æ“ŠåŠ›" + requiredCount);
             List<Card> playableCards = getPlayableCards(cardList, selectedAttribute);
             System.out.println("Selected Attribute: " + selectedAttribute);
             System.out.println("Playable Cards: " + playableCards);
 
-            // ??©å®¶???3å¼µç?¸å??å±¬æ?§ç??
+            // ç©å®¶é¸3å¼µç›¸åŒå±¬æ€§ç‰Œ
             if (playableCards.size() >= 3) {
                 List<Card> selectedCards = new ArrayList<>();
                 for (int i = 0; i < 3; i++) {
@@ -41,7 +41,7 @@ public class Main {
                     selectedCards.add(card);
                 }
                 System.out.println("Selected Cards: " + selectedCards);
-                // å¾???????ä¸­ç§»??¤é?¸æ???????¡ç??
+                // å¾æ‰‹ç‰Œä¸­ç§»é™¤é¸æ“‡çš„å¡ç‰‡
                 for (Card card : selectedCards) {
                     player.removeCardFromHand(card);
                 }
@@ -49,10 +49,10 @@ public class Main {
             } else {
                 System.out.println("No playable cards. Pass this turn.");
             }
-            // Boss??»æ?????æ®?
+            // Bossæ”»æ“Šéšæ®µ
             performBossAction(player,boss);
 
-            // çµ?ç®????æ®?
+            // çµç®—éšæ®µ
             if (player.getHealth() <= 0) {
                 System.out.println("Player loses. Game over!");
                 break;
@@ -62,7 +62,6 @@ public class Main {
             }
         }
     }
-    
     public static Card drawCard(List<Card> cardList) {
         if (cardList.isEmpty()) {
             return null;
@@ -74,7 +73,7 @@ public class Main {
     }
 
     private static List<Card> createCardList() {
-        // è§??????¡ç?? JSON
+        // è§£æå¡ç‰‡ JSON
         List<Card> cardList = new ArrayList<>();
         try (FileReader reader = new FileReader("./Java_project/card.json")) {
             Gson gson = new Gson();
@@ -122,12 +121,12 @@ public class Main {
         boolean healthorattack = new Random().nextBoolean();
         if (healthorattack) {
             boss.increaseHealth(1);
-            System.out.println("Boss¦^¦å");
-            System.out.println("Boss¦å¶q:" + boss.getHealth());
+            System.out.println("Bosså›è¡€");
+            System.out.println("Bossè¡€é‡:" + boss.getHealth());
         } else {
             player.decreaseHealth(1);
-            System.out.println("Boss§ğÀ»");
-            System.out.println("ª±®a¦å¶q:" + player.getHealth());
+            System.out.println("Bossæ”»æ“Š");
+            System.out.println("ç©å®¶è¡€é‡:" + player.getHealth());
         }
     }
 
