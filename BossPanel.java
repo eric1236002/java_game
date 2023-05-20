@@ -11,7 +11,7 @@ public class BossPanel extends JPanel {
 
     public BossPanel() {
         boss = new Boss(10);
-        setPreferredSize(new Dimension(200, 200)); // BossPanel size
+        setPreferredSize(new Dimension(996, 600)); // BossPanel size
         //loadImage
         try {
             backgroundImage = ImageIO.read(new File("picture/boss.png"));
@@ -20,11 +20,12 @@ public class BossPanel extends JPanel {
         }
     }
 
+    /*
     public void setBossHealth(int health) {
         boss.setHealth(health);
         repaint(); // Update Boss health
     }
-
+    */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -42,12 +43,17 @@ public class BossPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         Stroke oldStroke = g2d.getStroke();
         g2d.setStroke(new BasicStroke(3)); // Set the desired thickness
-        g2d.drawRect(10, 10, 10 * 20, 30);
+        g2d.drawRect(10, 10, boss.getHealth()* 20, 30);
         g2d.setStroke(oldStroke); // Restore the old stroke
         Font font = new Font("Arial", Font.BOLD, 26);
         g.setFont(font);
         g.setColor(Color.WHITE);
         g.drawString("Boss health: " + boss.getHealth(), 10, 70);
 
+    }
+
+    public void update() {
+        System.out.println("Boss Panel update!");
+        repaint();
     }
 }

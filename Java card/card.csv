@@ -1,0 +1,41 @@
+Messi,Person,Westerner,Athlete,None,None,None,FALSE
+Ronaldo,Person,Westerner,Athlete,None,None,None,FALSE
+Kobe,Person,Westerner,Athlete,None,NBA Champion,Hall of famer,TRUE
+Jordan,Person,Westerner,Athlete,None,NBA Champion,Hall of famer,FALSE
+Curry,Person,Westerner,Athlete,None,NBA Champion,None,FALSE
+James,Person,Westerner,Athlete,None,NBA Champion,None,FALSE
+YOH,Person,Oriental,Athlete,None,None,None,FALSE
+Taiwan N0.4,Person,Oriental,Athlete,None,None,Hall of famer,FALSE
+Tai,Person,Oriental,Athlete,None,None,None,FALSE
+Shohei,Person,Oriental,Athlete,None,None,None,TRUE
+Yuzuru,Person,Oriental,Athlete,None,None,None,FALSE
+Eileen,Person,Oriental,Athlete,None,None,None,FALSE
+Obama,Person,Westerner,None,None,None,None,FALSE
+Abe,Person,Oriental,None,National leader,None,None,FALSE
+Mao,Person,Oriental,None,National leader,None,None,FALSE
+Trump,Person,Westerner,None,National leader,None,None,FALSE
+Elizabeth,Person,Westerner,None,National leader,None,None,FALSE
+Bill,Person,Westerner,None,National leader,Entrepreneur,None,FALSE
+Ma,Person,Oriental,None,None,Entrepreneur,None,FALSE
+Buffett,Person,Westerner,None,None,Entrepreneur,None,FALSE
+Mask,Person,Westerner,None,None,Entrepreneur,None,FALSE
+Einstein,Person,Westerner,None,None,Scientist,None,FALSE
+F=ma,Person,Westerner,None,None,Scientist,None,TRUE
+Hawking,Person,Westerner,None,None,Scientist,None,FALSE
+Curie,Person,Westerner,None,None,Scientist,None,FALSE
+Shakespeare,Person,Westerner,None,None,None,Poet,TRUE
+Lee,Person,Oriental,None,None,None,Poet,FALSE
+KP,Person,Oriental,None,None,None,Political figure,FALSE
+Pelosi,Person,Westerner,None,None,None,Political figure,FALSE
+LoveKP,Person,Oriental,None,None,None,Political figure,FALSE
+Mozart,Person,Westerner,None,Musician,None,None,FALSE
+Beethoven,Person,Westerner,None,Musician,None,None,FALSE
+Wu Bai,Person,Oriental,None,Musician,None,None,TRUE
+LiSA,Person,Oriental,None,Musician,None,None,FALSE
+Ariana Grande,Person,Oriental,None,Musician,None,None,FALSE
+Crocodile,Person,Oriental,None,None,None,Cartoonist,FALSE
+Fujiko,Person,Oriental,None,None,None,Cartoonist,FALSE
+Osamu,Person,Oriental,None,None,None,Cartoonist,FALSE
+Leonardo,Person,Westerner,None,None,None,Actor,FALSE
+Hsu1,Person,Oriental,None,None,None,Actor,FALSE
+Hsu2,Person,Oriental,None,None,None,Actor,FALSE

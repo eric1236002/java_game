@@ -11,29 +11,29 @@ import com.google.gson.reflect.TypeToken;
 
 public class main {
     public static void main(String[] args) {
-        // 建立玩家和卡片列表
-        Player player = new Player(); // 初始血量為 10
-        Boss boss = new Boss(10); // 初始血量為 10
+        // create a new player and card list
+        Player player = new Player(); // initial HP is 10
+        Boss boss = new Boss(10); // initial HP is 10
         List<Card> cardList = createCardList();
         Map<String, Integer> attributeCondition = loadAttributeCondition();
-        // 添加初始手牌
+        // add 5 cards to player's hand
         for (int i = 0; i < 5; i++) {
             Card card = drawCard(cardList);
             player.addCardToHand(card);
         }
-        // 遊戲主要進行階段
+        // start the game
         while (true) {
-            // 玩家攻擊階段
+            // player attack turn
             String selectedAttribute = getRandomAttribute(attributeCondition);
             int requiredCount = attributeCondition.get(selectedAttribute);
-            // 在遊戲中使用選擇的屬性條件
-            System.out.println("要求屬性:" + selectedAttribute);
-            System.out.println("攻擊力" + requiredCount);
+            // choose 3 cards from hand and remove them from hand
+            System.out.println("Attribute selected:" + selectedAttribute);
+            System.out.println("Attack: " + requiredCount);
             List<Card> playableCards = getPlayableCards(cardList, selectedAttribute);
             System.out.println("Selected Attribute: " + selectedAttribute);
             System.out.println("Playable Cards: " + playableCards);
 
-            // 玩家選3張相同屬性牌
+            // select 3 cards from playable cards
             if (playableCards.size() >= 3) {
                 List<Card> selectedCards = new ArrayList<>();
                 for (int i = 0; i < 3; i++) {
@@ -41,7 +41,7 @@ public class main {
                     selectedCards.add(card);
                 }
                 System.out.println("Selected Cards: " + selectedCards);
-                // 從手牌中移除選擇的卡片
+                // remove selected cards from player's hand
                 for (Card card : selectedCards) {
                     player.removeCardFromHand(card);
                 }
@@ -49,10 +49,10 @@ public class main {
             } else {
                 System.out.println("No playable cards. Pass this turn.");
             }
-            // Boss攻擊階段
+            // Boss attack turn
             performBossAction(player,boss);
 
-            // 結算階段
+            // check if game over
             if (player.getHealth() <= 0) {
                 System.out.println("Player loses. Game over!");
                 break;
@@ -73,7 +73,7 @@ public class main {
     }
 
     private static List<Card> createCardList() {
-        // 解析卡片 JSON
+        // get the card from JSON
         List<Card> cardList = new ArrayList<>();
         try (FileReader reader = new FileReader("./Java_project/card.json")) {
             Gson gson = new Gson();
@@ -121,12 +121,12 @@ public class main {
         boolean healthorattack = new Random().nextBoolean();
         if (healthorattack) {
             boss.increaseHealth(1);
-            System.out.println("Boss回血");
-            System.out.println("Boss血量:" + boss.getHealth());
+            System.out.println("Boss heal");
+            System.out.println("Boss HP:" + boss.getHealth());
         } else {
             player.decreaseHealth(1);
-            System.out.println("Boss攻擊");
-            System.out.println("玩家血量:" + player.getHealth());
+            System.out.println("Boss attack");
+            System.out.println("player HP:" + player.getHealth());
         }
     }
 
