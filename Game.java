@@ -12,13 +12,14 @@ public class Game {
     private List<Card> cardList;
     private Boolean attack = false;
     private List<Card> selectCard = new ArrayList<Card>();
+    private Boolean gameover;
 
     public Game() {
         player = new Player();
-        boss = new Boss(20);
+        boss = new Boss(10);
         cardList = new ArrayList<Card>();
         readCardData();
-        //generate_random_handcard();
+        // generate_random_handcard();
     }
 
     public boolean getAttack() {
@@ -27,6 +28,10 @@ public class Game {
 
     public void setAttack(boolean attack) {
         this.attack = attack;
+    }
+
+    public Boolean getGameover() {
+        return gameover;
     }
 
     public Player getPlayer() {
@@ -40,28 +45,36 @@ public class Game {
     public List<Card> getSelectCards() {
         return selectCard;
     }
-    public int selectCardsize(){
+
+    public int selectCardsize() {
         return selectCard.size();
     }
-    
+
     public void generate_random_handcard() {
-        //System.out.println("Generate random handcard");
+        // System.out.println("Generate random handcard");
         // clear handcard
         Random random = new Random();
+
+        
         if (this.player.getHand().size() > 0) {
             System.out.println("clear handcard");
-            this.player.getHand().clear();
-            System.out.println(this.player.getHand().size() + " cards left");
+            for (int i = 0; i < 8; i++) {
+                int randomNumber = random.nextInt(cardList.size());
+                // System.out.println(cardList.get(randomNumber).getName()+cardList.get(randomNumber).getType()+cardList.get(randomNumber).getAttributes()+cardList.get(randomNumber).hasSpecialEffect());
+                Card card = new Card(cardList.get(randomNumber).getName(), cardList.get(randomNumber).getType(),
+                        cardList.get(randomNumber).getAttributes(), cardList.get(randomNumber).hasSpecialEffect());
+                this.player.getHand().set(i, card);
+            }
+        } else {
+            // Generate 8 cards to handcard
+            for (int i = 0; i < 8; i++) {
+                int randomNumber = random.nextInt(cardList.size());
+                // System.out.println(cardList.get(randomNumber).getName()+cardList.get(randomNumber).getType()+cardList.get(randomNumber).getAttributes()+cardList.get(randomNumber).hasSpecialEffect());
+                Card card = new Card(cardList.get(randomNumber).getName(), cardList.get(randomNumber).getType(),
+                        cardList.get(randomNumber).getAttributes(), cardList.get(randomNumber).hasSpecialEffect());
+                this.player.addCardToHand(card);
+            }
         }
-        // Generate 8 cards to handcard
-        for (int i = 0; i < 8; i++) {
-            int randomNumber = random.nextInt(cardList.size());
-            // System.out.println(cardList.get(randomNumber).getName()+cardList.get(randomNumber).getType()+cardList.get(randomNumber).getAttributes()+cardList.get(randomNumber).hasSpecialEffect());
-            Card card = new Card(cardList.get(randomNumber).getName(), cardList.get(randomNumber).getType(),
-                    cardList.get(randomNumber).getAttributes(), cardList.get(randomNumber).hasSpecialEffect());
-            this.player.addCardToHand(card);
-        }
-
     }
 
     public void readCardData() {
@@ -80,10 +93,10 @@ public class Game {
         }
     }
 
-    private void choose_attack_card(){
+    private void choose_attack_card() {
         while (selectCard.size() <= 3 && !attack) {
             for (Card card : player.getHand()) {
-                //System.out.println(player.getHand().get(0).getSelected());
+                // System.out.println(player.getHand().get(0).getSelected());
                 if (card.getSelected() && !selectCard.contains(card)) {
                     selectCard.add(card);
                 }
@@ -93,25 +106,27 @@ public class Game {
             }
         }
     }
+
     public void update() {
 
         System.out.println("New Turn");
         attack = false;
         // player turn
         // selecting card
-        while(true){
+        while (true) {
             choose_attack_card();
-            if(attack && selectCard.size() == 3){
+            if (attack && selectCard.size() == 3) {
                 break;
             }
-            if(attack && selectCard.size()!=3){
+            if (attack && selectCard.size() != 3) {
                 attack = false;
             }
-            if(selectCard.size()>3){
-                selectCard.clear();
+            if (selectCard.size() > 3) {
+                selectCard.removeAll(selectCard);
+                selectCard = new ArrayList<Card>();
                 attack = false;
             }
-            //System.out.println("selected card: " + selectCard);
+            // System.out.println("selected card: " + selectCard);
         }
         // attack turn
         // check if attack is possible
@@ -126,6 +141,13 @@ public class Game {
                             .equals(selectCard.get(2).getAttributes().get(attribute_idx))) {
                 attack_possible = true;
                 attack_value = attribute_idx + 1;
+
+                if (selectCard.get(0).hasSpecialEffect())
+                    attack_value *= 2;
+                if (selectCard.get(1).hasSpecialEffect())
+                    player.increaseHealth(2);
+                if (selectCard.get(2).hasSpecialEffect())
+                    attack_value += 2;
                 break;
             }
             attribute_idx--;
@@ -144,11 +166,13 @@ public class Game {
         // Boss attack turn
         boolean boss_attack = new Random().nextBoolean();
         if (boss_attack) {
-            player.decreaseHealth(new Random().nextInt(2) + 1);
-            System.out.println("boss Attack:");
+            int damage = new Random().nextInt(2) + 1;
+            player.decreaseHealth(damage);
+            System.out.println("boss Attack:" + damage);
         } else {
-            boss.increaseHealth(new Random().nextInt(2) + 1);
-            System.out.println("boss Heal:");
+            int heal_hp = new Random().nextInt(2) + 1;
+            boss.increaseHealth(heal_hp);
+            System.out.println("boss Heal:" + heal_hp);
         }
 
         // System.out.println("boss Attack:" );
