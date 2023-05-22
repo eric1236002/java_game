@@ -92,6 +92,12 @@ public class BossPanel extends JPanel {
         Stroke oldStroke = g2d.getStroke();
         g2d.setStroke(new BasicStroke(3)); // Set the desired thickness
         g2d.drawRect(10, 10, boss.getHealth()* 20, 30);
+        if(boss.getHealth() > 10){
+            g2d.drawRect(11, 11, boss.getHealth()* 20, 30);            
+        }
+        else{
+            g2d.drawRect(11, 11, 10*20, 30);
+        }
         g2d.setStroke(oldStroke); // Restore the old stroke
         Font font = new Font("Arial", Font.BOLD, 26);
         g.setFont(font);

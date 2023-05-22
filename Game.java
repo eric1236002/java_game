@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class Game {
     private Player player;
@@ -180,8 +181,20 @@ public class Game {
         // check if game over
         if (player.getHealth() <= 0) {
             System.out.println("Player loses. Game over!");
+            showGameOverDialog();
         } else if (boss.getHealth() <= 0) {
             System.out.println("Player wins. Game over!");
+            showGameOverDialog();
+        }
+    }
+    private void showGameOverDialog() {
+        int choice = JOptionPane.showConfirmDialog(null, "Restart Game?", "Game over!", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            System.out.println("Restart Game");
+
+        } else {
+            System.out.println("End Game");
+
         }
     }
 }
