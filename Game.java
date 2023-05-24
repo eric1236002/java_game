@@ -184,17 +184,29 @@ public class Game {
             showGameOverDialog();
         } else if (boss.getHealth() <= 0) {
             System.out.println("Player wins. Game over!");
-            showGameOverDialog();
+            showWinDialog();
         }
     }
     private void showGameOverDialog() {
         int choice = JOptionPane.showConfirmDialog(null, "Restart Game?", "Game over!", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             System.out.println("Restart Game");
-
+            player.setHealth(10);
+            boss.setHealth(10);
         } else {
             System.out.println("End Game");
-
+            System.exit(0);
+        }
+    }
+    private void showWinDialog() {
+        int choice = JOptionPane.showConfirmDialog(null, "Restart Game?", "Win!", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            System.out.println("Restart Game");
+            player.setHealth(10);
+            boss.setHealth(10);
+        } else {
+            System.out.println("End Game");
+            System.exit(0);
         }
     }
 }
