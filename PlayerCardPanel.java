@@ -1,13 +1,15 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.*;
+import java.io.File;
 
 public class PlayerCardPanel extends JPanel{
     public Player player;
     private List<JButton> cardbtns = new ArrayList<JButton>();
-    
+    private Clip buttonMusic;
     public PlayerCardPanel(Player player) {
         setLayout(new GridBagLayout());
         this.player = player;
@@ -55,6 +57,21 @@ public class PlayerCardPanel extends JPanel{
             // add action listener to the button
             cardbtns.get(player.getHand().indexOf(card)).addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    try {
+                        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/button2.wav"));
+                        AudioFormat format = audioInputStream.getFormat();
+                        DataLine.Info info = new DataLine.Info(Clip.class, format);
+                        buttonMusic = (Clip) AudioSystem.getLine(info);
+                        // open
+                        buttonMusic.open(audioInputStream);
+                        // set volume
+                        FloatControl gainControl = (FloatControl) buttonMusic.getControl(FloatControl.Type.MASTER_GAIN);
+                        gainControl.setValue(1.0f);
+                            // play
+                        buttonMusic.start();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                     System.out.println(card.getName() + " is clicked");
                     card.setSelected(!card.getSelected());
                     System.out.println(card.getName() + " is Select:" + card.getSelected());

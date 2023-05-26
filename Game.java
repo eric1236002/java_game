@@ -2,9 +2,12 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
+
+import javax.sound.sampled.*;
 import javax.swing.JOptionPane;
 
 public class Game {
@@ -14,7 +17,8 @@ public class Game {
     private Boolean attack = false;
     private List<Card> selectCard = new ArrayList<Card>();
     private Boolean gameover;
-
+    private Clip winMusic;
+    private Clip failMusic;
     public Game() {
         player = new Player();
         boss = new Boss(10);
@@ -188,6 +192,7 @@ public class Game {
         }
     }
     private void showGameOverDialog() {
+        failMusic();
         int choice = JOptionPane.showConfirmDialog(null, "Restart Game?", "Game over!", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             System.out.println("Restart Game");
@@ -199,6 +204,7 @@ public class Game {
         }
     }
     private void showWinDialog() {
+        winMusic();
         int choice = JOptionPane.showConfirmDialog(null, "Restart Game?", "Win!", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             System.out.println("Restart Game");
@@ -207,6 +213,44 @@ public class Game {
         } else {
             System.out.println("End Game");
             System.exit(0);
+        }
+    }
+    private void winMusic() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/win.wav"));
+            AudioFormat format = audioInputStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            winMusic = (Clip) AudioSystem.getLine(info);
+            // open
+            winMusic.open(audioInputStream);
+            // set volume
+            FloatControl gainControl = (FloatControl) winMusic.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(1.0f);
+            // play
+            winMusic.start();
+            //one time
+            winMusic.loop(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void failMusic() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("music/fail.wav"));
+            AudioFormat format = audioInputStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            failMusic = (Clip) AudioSystem.getLine(info);
+            // open
+            failMusic.open(audioInputStream);
+            // set volume
+            FloatControl gainControl = (FloatControl) failMusic.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(1.0f);
+            // play
+            failMusic.start();
+            //one time
+            failMusic.loop(0);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
