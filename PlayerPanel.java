@@ -4,13 +4,30 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class PlayerPanel extends JPanel{
     public Player player;
+    // --------------------------------------------
+    private boolean isHealthDecreasing;
+    private Timer healthTimer;
+    private int healthAnimationDuration;
+    private int initialHealth;
+    private int targetHealth;
+    private long healthAnimationStartTime;
+    // -------------------------------------------
 
     public PlayerPanel() {
         player = new Player();
         setPreferredSize(new Dimension(248, 400)); // PlayerPanel size
+        // -------------------------------------------
+        isHealthDecreasing = false;
+        healthTimer = new Timer();
+        healthAnimationDuration = 1000; // Animation duration in milliseconds
+
+        // -------------------------------------------
     }
 
     @Override
@@ -42,5 +59,49 @@ public class PlayerPanel extends JPanel{
     public void update(){
         System.out.println("PlayerPanel update!");
         repaint();
+    }
+
+    public void decreasePlayerHealth(int amount){
+        if(player.getHealth() >= amount){
+            initialHealth = player.getHealth();
+            targetHealth = player.getHealth() - amount;
+            isHealthDecreasing = true;
+            healthAnimationStartTime = System.currentTimeMillis();
+            startHealthAnimation();
+        }
+    }
+
+    public void increasePlayerHealth(int amount){
+        if(player.getHealth() + amount <= 100){
+            player.setHealth(player.getHealth() + amount);
+            isHealthDecreasing = false;
+            healthAnimationStartTime = System.currentTimeMillis();
+            startHealthAnimation();
+        }
+    }
+
+    public void startHealthAnimation(){
+        healthTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long elapsedTime = System.currentTimeMillis() - healthAnimationStartTime;
+                double progress = (double) elapsedTime / healthAnimationDuration;
+
+                if(progress >= 1.0){
+                    if(isHealthDecreasing){
+                        player.setHealth(targetHealth);
+                    }
+                    else{
+                        player.setHealth(targetHealth);
+                    }
+                    cancel();
+                }
+                else{
+                    int currentHealth = (int) (initialHealth + (targetHealth - initialHealth) * progress);
+                    player.setHealth(currentHealth);
+                }
+                repaint();
+            }
+        }, 0, 10);
     }
 }

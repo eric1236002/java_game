@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.*;
 import java.io.File;
+import javax.swing.border.Border;
 
 public class PlayerCardPanel extends JPanel{
     public Player player;
     private List<JButton> cardbtns = new ArrayList<JButton>();
     private Clip buttonMusic;
+    private Border selectedBorder = BorderFactory.createLineBorder(Color.RED, 5);
+
     public PlayerCardPanel(Player player) {
         setLayout(new GridBagLayout());
         this.player = player;
@@ -17,6 +20,16 @@ public class PlayerCardPanel extends JPanel{
             cardbtns.add(new JButton());
         }
         //setPreferredSize(new Dimension(1240, 250));
+    }
+
+    public void repaintCardBorder(){
+        for (Card card : player.getHand()) {
+            if (card.getSelected()) {
+                cardbtns.get(player.getHand().indexOf(card)).setBorder(selectedBorder);
+            } else {
+                cardbtns.get(player.getHand().indexOf(card)).setBorder(null);
+            }
+        }
     }
 
     public void update(){
@@ -75,6 +88,11 @@ public class PlayerCardPanel extends JPanel{
                     System.out.println(card.getName() + " is clicked");
                     card.setSelected(!card.getSelected());
                     System.out.println(card.getName() + " is Select:" + card.getSelected());
+                    if (card.getSelected()) {
+                        cardbtns.get(player.getHand().indexOf(card)).setBorder(selectedBorder);
+                    } else {
+                        cardbtns.get(player.getHand().indexOf(card)).setBorder(null);
+                    }
                 }
             });
         }

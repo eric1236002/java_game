@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-
 import javax.sound.sampled.*;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -27,7 +26,10 @@ public class GamePanel extends JPanel implements Runnable {
         
         playerCardPanel = new PlayerCardPanel(game.getPlayer());
         //playerCardPanel.SetPanel();
-
+        game.setPlayerCardPanel(playerCardPanel);
+        game.setBossPanel(bossPanel);
+        game.setPlayerPanel(playerPanel);
+        
         bossPanel.setOpaque(false);
         playerPanel.setOpaque(false);
         playerCardPanel.setOpaque(false);

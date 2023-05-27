@@ -16,6 +16,14 @@ public class BossPanel extends JPanel {
     private int deltaY;
     private BufferedImage[] bossImages;
     private int currentFrame;
+    // --------------------------------------------
+    private boolean isHealthDecreasing;
+    private Timer healthTimer;
+    private int healthAnimationDuration;
+    private int initialHealth;
+    private int targetHealth;
+    private long healthAnimationStartTime;
+    // -------------------------------------------
 
     public BossPanel() {
         boss = new Boss(10);
@@ -35,6 +43,12 @@ public class BossPanel extends JPanel {
         bossY = 0;
         deltaX = 5;
         deltaY = 5;
+        // -------------------------------------------
+        isHealthDecreasing = false;
+        healthTimer = new Timer();
+        healthAnimationDuration = 1000; // Animation duration in milliseconds
+
+        // -------------------------------------------
         // Start a timer to update Boss position every 100 milliseconds
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -67,12 +81,7 @@ public class BossPanel extends JPanel {
             deltaY = -deltaY;
         }
     }
-    /*
-    public void setBossHealth(int health) {
-        boss.setHealth(health);
-        repaint(); // Update Boss health
-    }
-    */
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -109,5 +118,49 @@ public class BossPanel extends JPanel {
     public void update() {
         System.out.println("Boss Panel update!");
         repaint();
+    }
+    // -------------------------------------------
+    public void decreaseBossHealth(int amount) {
+        if (boss.getHealth() >= amount) {
+            initialHealth = boss.getHealth();
+            targetHealth = boss.getHealth() - amount;
+            isHealthDecreasing = true;
+            healthAnimationStartTime = System.currentTimeMillis();
+            startHealthAnimation();
+        }
+    }
+    
+    public void increaseBossHealth(int amount) {
+        if (boss.getHealth() + amount <= 100) {
+            initialHealth = boss.getHealth();
+            targetHealth = boss.getHealth() + amount;
+            isHealthDecreasing = false;
+            healthAnimationStartTime = System.currentTimeMillis();
+            startHealthAnimation();
+        }
+    }
+    
+    private void startHealthAnimation() {
+        healthTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long elapsedTime = System.currentTimeMillis() - healthAnimationStartTime;
+                double progress = (double) elapsedTime / healthAnimationDuration;
+    
+                if (progress >= 1.0) {
+                    if (isHealthDecreasing) {
+                        boss.setHealth(targetHealth);
+                    } else {
+                        boss.setHealth(targetHealth);
+                    }
+                    cancel();
+                } else {
+                    int currentHealth = (int) (initialHealth + (targetHealth - initialHealth) * progress);
+                    boss.setHealth(currentHealth);
+                }
+    
+                repaint();
+            }
+        }, 0, 10);
     }
 }

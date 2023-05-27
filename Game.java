@@ -15,14 +15,18 @@ public class Game {
     private Boss boss;
     private List<Card> cardList;
     private Boolean attack = false;
-    private List<Card> selectCard = new ArrayList<Card>();
+    private List<Card> selectCard;
     private Boolean gameover;
+    private PlayerCardPanel playerCardPanel;
+    private PlayerPanel playerPanel;
+    private BossPanel bossPanel;
     private Clip winMusic;
     private Clip failMusic;
     public Game() {
         player = new Player();
         boss = new Boss(10);
         cardList = new ArrayList<Card>();
+        selectCard = new ArrayList<Card>();
         readCardData();
         // generate_random_handcard();
     }
@@ -31,6 +35,18 @@ public class Game {
         return attack;
     }
 
+    public void setPlayerCardPanel(PlayerCardPanel playerCardPanel) {
+        this.playerCardPanel = playerCardPanel;
+    }
+
+    public void setBossPanel(BossPanel bossPanel) {
+        this.bossPanel = bossPanel;
+    }
+
+    public void setPlayerPanel(PlayerPanel playerPanel) {
+        this.playerPanel = playerPanel;
+    }
+    
     public void setAttack(boolean attack) {
         this.attack = attack;
     }
@@ -116,6 +132,7 @@ public class Game {
 
         System.out.println("New Turn");
         attack = false;
+        selectCard = new ArrayList<Card>();
         // player turn
         // selecting card
         while (true) {
@@ -127,6 +144,10 @@ public class Game {
                 attack = false;
             }
             if (selectCard.size() > 3) {
+                for (Card card : selectCard) {
+                    card.setSelected(false);
+                    this.playerCardPanel.repaintCardBorder();
+                }
                 selectCard.removeAll(selectCard);
                 selectCard = new ArrayList<Card>();
                 attack = false;
@@ -150,7 +171,8 @@ public class Game {
                 if (selectCard.get(0).hasSpecialEffect())
                     attack_value *= 2;
                 if (selectCard.get(1).hasSpecialEffect())
-                    player.increaseHealth(2);
+                    //player.increaseHealth(2);
+                    playerPanel.increasePlayerHealth(2);
                 if (selectCard.get(2).hasSpecialEffect())
                     attack_value += 2;
                 break;
@@ -159,7 +181,13 @@ public class Game {
         }
         if (attack_possible) {
             System.out.println("Attack:" + attack_value);
-            boss.decreaseHealth(attack_value);
+            //boss.decreaseHealth(attack_value);
+            bossPanel.decreaseBossHealth(attack_value);
+            try {
+                Thread.sleep(1000); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("No playable cards. Pass this turn.");
         }
@@ -170,13 +198,20 @@ public class Game {
 
         // Boss attack turn
         boolean boss_attack = new Random().nextBoolean();
+        try {
+            Thread.sleep(1000); 
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (boss_attack) {
             int damage = new Random().nextInt(2) + 1;
-            player.decreaseHealth(damage);
+            //player.decreaseHealth(damage);
+            playerPanel.decreasePlayerHealth(damage);
             System.out.println("boss Attack:" + damage);
         } else {
             int heal_hp = new Random().nextInt(2) + 1;
-            boss.increaseHealth(heal_hp);
+            //boss.increaseHealth(heal_hp);
+            bossPanel.increaseBossHealth(heal_hp);
             System.out.println("boss Heal:" + heal_hp);
         }
 
