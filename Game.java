@@ -22,6 +22,9 @@ public class Game {
     private BossPanel bossPanel;
     private Clip winMusic;
     private Clip failMusic;
+    private String info1="";
+    private String info2="";
+    private String info3="";
     public Game() {
         player = new Player();
         boss = new Boss(10);
@@ -30,7 +33,15 @@ public class Game {
         readCardData();
         // generate_random_handcard();
     }
-
+    public String getinfo1() {
+        return info1;
+    }
+    public String getinfo2() {
+        return info2;
+    }
+    public String getinfo3() {
+        return info3;
+    }
     public boolean getAttack() {
         return attack;
     }
@@ -97,7 +108,11 @@ public class Game {
             }
         }
     }
-
+    public void restinfo() {
+        info1="";
+        info2="";
+        info3="";
+    }
     public void readCardData() {
         String csvFile = "./Java card/card.csv";
         String line;
@@ -170,17 +185,27 @@ public class Game {
 
                 if (selectCard.get(0).hasSpecialEffect())
                     attack_value *= 2;
+                    info3 ="attack value double\n";
                 if (selectCard.get(1).hasSpecialEffect())
                     //player.increaseHealth(2);
                     playerPanel.increasePlayerHealth(2);
+                    info3 = "player health +2\n";
                 if (selectCard.get(2).hasSpecialEffect())
                     attack_value += 2;
+                    info3 = "attack value +2\n";
                 break;
             }
             attribute_idx--;
         }
+        try {
+            // info1 = "Player attack:" + attack_value;
+            Thread.sleep(1000); 
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (attack_possible) {
             System.out.println("Attack:" + attack_value);
+            info1 = "Player attack:" + attack_value;
             //boss.decreaseHealth(attack_value);
             bossPanel.decreaseBossHealth(attack_value);
             try {
@@ -190,13 +215,12 @@ public class Game {
             }
         } else {
             System.out.println("No playable cards. Pass this turn.");
+            info1 = "No playable cards. Pass this turn.\n";
         }
 
         // check if game over
         if (boss.getHealth() <= 0) {
             System.out.println("Player wins. Game over!");
-            showWinDialog();
-            return;
         }
 
         // Boss attack turn
@@ -210,12 +234,14 @@ public class Game {
             int damage = new Random().nextInt(2) + 1;
             //player.decreaseHealth(damage);
             playerPanel.decreasePlayerHealth(damage);
-            System.out.println("boss Attack:" + damage);
+            System.out.println("boss attack:" + damage);
+            info2 = "Boss attack:" + damage+"\n";
         } else {
             int heal_hp = new Random().nextInt(2) + 1;
             //boss.increaseHealth(heal_hp);
             bossPanel.increaseBossHealth(heal_hp);
             System.out.println("boss Heal:" + heal_hp);
+            info2 = "Boss heal:" + heal_hp+"\n";
         }
 
         // System.out.println("boss Attack:" );
@@ -223,9 +249,11 @@ public class Game {
         // check if game over
         if (player.getHealth() <= 0) {
             System.out.println("Player loses. Game over!");
+            info1 = "Player loses. Game over!\n";
             showGameOverDialog();
         } else if (boss.getHealth() <= 0) {
             System.out.println("Player wins. Game over!");
+            info1 = "Player wins. Game over!\n";
             showWinDialog();
         }
     }
@@ -236,6 +264,7 @@ public class Game {
             System.out.println("Restart Game");
             player.setHealth(10);
             boss.setHealth(10);
+            restinfo();
         } else {
             System.out.println("End Game");
             System.exit(0);
@@ -248,6 +277,7 @@ public class Game {
             System.out.println("Restart Game");
             player.setHealth(10);
             boss.setHealth(10);
+            restinfo();
         } else {
             System.out.println("End Game");
             System.exit(0);

@@ -144,6 +144,7 @@ public class GamePanel extends JPanel implements Runnable {
                 game.setAttack(true);
                 System.out.println("attack btn:" + game.getAttack());
                 System.out.println("Selected card: " + game.getSelectCards());
+                game.restinfo();
                 buttonMusic();
             }
         });
@@ -153,7 +154,11 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         // Draw background image
         g.drawImage(background.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
-
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        g.drawString(game.getinfo1(), getWidth() - 510, 110); 
+        g.drawString(game.getinfo2(), getWidth() - 510, 150); 
+        g.drawString(game.getinfo3(), getWidth() - 510, 190); 
     }
 
     public void update() {
