@@ -221,6 +221,9 @@ public class Game {
         // check if game over
         if (boss.getHealth() <= 0) {
             System.out.println("Player wins. Game over!");
+            info1 = "Player wins. Game over!\n";
+            showWinDialog();
+            return;
         }
 
         // Boss attack turn
