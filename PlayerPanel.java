@@ -62,13 +62,14 @@ public class PlayerPanel extends JPanel{
     }
 
     public void decreasePlayerHealth(int amount){
-        if(player.getHealth() >= amount){
-            initialHealth = player.getHealth();
+        initialHealth = player.getHealth();
+        if(player.getHealth() - amount <= 0)
+            targetHealth = 0;
+        else
             targetHealth = player.getHealth() - amount;
-            isHealthDecreasing = true;
-            healthAnimationStartTime = System.currentTimeMillis();
-            startHealthAnimation();
-        }
+        isHealthDecreasing = true;
+        healthAnimationStartTime = System.currentTimeMillis();
+        startHealthAnimation();
     }
 
     public void increasePlayerHealth(int amount){

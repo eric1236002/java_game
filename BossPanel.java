@@ -121,13 +121,14 @@ public class BossPanel extends JPanel {
     }
     // -------------------------------------------
     public void decreaseBossHealth(int amount) {
-        if (boss.getHealth() >= amount) {
-            initialHealth = boss.getHealth();
+        initialHealth = boss.getHealth();
+        if(boss.getHealth() - amount <=0)
+            targetHealth = 0;
+        else
             targetHealth = boss.getHealth() - amount;
-            isHealthDecreasing = true;
-            healthAnimationStartTime = System.currentTimeMillis();
-            startHealthAnimation();
-        }
+        isHealthDecreasing = true;
+        healthAnimationStartTime = System.currentTimeMillis();
+        startHealthAnimation();
     }
     
     public void increaseBossHealth(int amount) {

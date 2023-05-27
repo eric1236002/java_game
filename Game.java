@@ -192,8 +192,11 @@ public class Game {
             System.out.println("No playable cards. Pass this turn.");
         }
 
+        // check if game over
         if (boss.getHealth() <= 0) {
             System.out.println("Player wins. Game over!");
+            showWinDialog();
+            return;
         }
 
         // Boss attack turn
