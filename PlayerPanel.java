@@ -43,11 +43,14 @@ public class PlayerPanel extends JPanel{
         Stroke oldStroke = g2d.getStroke();
         g2d.setStroke(new BasicStroke(3)); // Set the desired thickness
         g2d.drawRect(200, 10, player.getHealth() * 20, 30);
+        /* 
         if (player.getHealth() > 10) {
             g2d.drawRect(201, 11, player.getHealth() * 20, 30);
         } else {
             g2d.drawRect(201, 11, 10 * 20, 30);
         }
+        */
+        g2d.drawRect(201, 11, player.getHealth() * 20, 30);
         g2d.setStroke(oldStroke); // Restore the old stroke
         Font font = new Font("Arial", Font.BOLD, 26);
         g.setFont(font);
@@ -73,12 +76,11 @@ public class PlayerPanel extends JPanel{
     }
 
     public void increasePlayerHealth(int amount){
-        if(player.getHealth() + amount <= 100){
-            player.setHealth(player.getHealth() + amount);
-            isHealthDecreasing = false;
-            healthAnimationStartTime = System.currentTimeMillis();
-            startHealthAnimation();
-        }
+        initialHealth = player.getHealth();
+        targetHealth = initialHealth + amount;
+        isHealthDecreasing = false;
+        healthAnimationStartTime = System.currentTimeMillis();
+        startHealthAnimation();
     }
 
     public void startHealthAnimation(){

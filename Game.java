@@ -188,6 +188,7 @@ public class Game {
                     info3 ="attack value double\n";
                 if (selectCard.get(1).hasSpecialEffect())
                     //player.increaseHealth(2);
+                    System.out.println("player health +2");
                     playerPanel.increasePlayerHealth(2);
                     info3 = "player health +2\n";
                 if (selectCard.get(2).hasSpecialEffect())
