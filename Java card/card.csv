@@ -32,7 +32,7 @@ Mozart,Person,Westerner,None,Musician,None,None,FALSE
 Beethoven,Person,Westerner,None,Musician,None,None,FALSE
 Wu Bai,Person,Oriental,None,Musician,None,None,TRUE
 LiSA,Person,Oriental,None,Musician,None,None,FALSE
-Ariana Grande,Person,Oriental,None,Musician,None,None,FALSE
+Ariana Grande,Person,Westerner,None,Musician,None,None,FALSE
 Crocodile,Person,Oriental,None,None,None,Cartoonist,FALSE
 Fujiko,Person,Oriental,None,None,None,Cartoonist,FALSE
 Osamu,Person,Oriental,None,None,None,Cartoonist,FALSE
