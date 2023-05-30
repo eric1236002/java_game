@@ -183,17 +183,20 @@ public class Game {
                 attack_possible = true;
                 attack_value = attribute_idx + 1;
 
-                if (selectCard.get(0).hasSpecialEffect())
+                if (selectCard.get(0).hasSpecialEffect()){
                     attack_value *= 2;
                     info3 ="attack value double\n";
-                if (selectCard.get(1).hasSpecialEffect())
+                }
+                if (selectCard.get(1).hasSpecialEffect()){
                     //player.increaseHealth(2);
                     System.out.println("player health +2");
                     playerPanel.increasePlayerHealth(2);
                     info3 = "player health +2\n";
-                if (selectCard.get(2).hasSpecialEffect())
+                }
+                if (selectCard.get(2).hasSpecialEffect()){
                     attack_value += 2;
                     info3 = "attack value +2\n";
+                }
                 break;
             }
             attribute_idx--;
